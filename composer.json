@@ -1,0 +1,34 @@
+{
+    "name": "ronijan/backup-db",
+    "description": "The abiltiy to backup your Data from Database easily.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Huseyin Khalil",
+            "email": "huseyinkhalil@web.de"
+        }
+    ],
+    "require": {
+        "php": "^7.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }, 
+    "autoload": {
+        "psr-4": {
+            "Ronijan\\BackupDatabase\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/ExampleTest.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
