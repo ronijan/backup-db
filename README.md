@@ -16,7 +16,8 @@ use Ronijan\BackupDatabase\Backup;
 require_once 'vendor/autoload.php';
 
 
-$backup = new Backup('localhost', 'username', 'password', 'db', '*');
+$backup = new Backup('localhost', 'username', 'password', 'db', '*'); // '*' means all tables
 
-$backup->run();
+// default is empty. If the path is not given, then it'll be saved in the root
+$backup->run('path/to/folder');
 ```

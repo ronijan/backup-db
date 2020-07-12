@@ -27,7 +27,7 @@ class Backup
         return mysqli_connect($this->host, $this->username, $this->password, $this->dbName);
     }
 
-    public function run()
+    public function run($pathToFolder = '')
     {
         // connect to db
         $sql  = $this->sqlConnect();
@@ -45,7 +45,10 @@ class Backup
         $result = $this->loopThroughAllTables($tables, $sql);
 
         // save file
-        (new GetFile)->saveData($result);
+        $isSaved = (new GetFile)->saveData($result, $pathToFolder);
+
+        // return true if backup successful
+        return ($isSaved === true);
     }
 
     private function loopThroughAllTables($tables, $link)
