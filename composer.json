@@ -1,16 +1,17 @@
 {
     "name": "ronijan/backup-db",
-    "description": "The abiltiy to backup your Data from Database easily.",
+    "description": "The ability to backup your Data from Database easily.",
     "type": "package",
     "license": "MIT",
     "authors": [
         {
-            "name": "Huseyin Khalil",
-            "email": "huseyinkhalil@web.de"
+            "name": "Ronijan",
+            "email": "7ussein.5alil@gamil.com"
         }
     ],
     "require": {
-        "php": "^7.3"
+        "php": "^7.4",
+      "ext-mysqli": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0"

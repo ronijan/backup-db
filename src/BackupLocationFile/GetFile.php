@@ -4,7 +4,7 @@ namespace Ronijan\BackupDatabase\BackupLocationFile;
 
 class GetFile
 {
-    public function saveData($content, $folderPath = '')
+    public function saveData($content, $folderPath = ''): bool
     {
       $isWritable = false;
       $file = $folderPath . 'db-backup-' . date('Y-m-d-H:i:s') . '.sql';

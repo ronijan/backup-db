@@ -7,19 +7,17 @@ use Ronijan\BackupDatabase\BackupLocationFile\GetFile;
 
 class Backup
 {
-    protected $host;
-    protected $username;
-    protected $password;
-    protected $dbName;
-    protected $tables;
+    protected string $host;
+    protected string $username;
+    protected string $password;
+    protected string $dbName;
 
-    public function __construct(string $host, string $username, string $password, string $dbName, $tables = '*')
+    public function __construct(string $host, string $username, string $password, string $dbName)
     {
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;
         $this->dbName = $dbName;
-        $this->tables = $tables;
     }
 
     protected function sqlConnect()
@@ -27,13 +25,13 @@ class Backup
         return mysqli_connect($this->host, $this->username, $this->password, $this->dbName);
     }
 
-    public function run($pathToFolder = '')
+    public function start($pathToFolder = ''): bool
     {
         // connect to db
-        $sql  = $this->sqlConnect();
+        $sql = $this->sqlConnect();
 
         // Check connection if errors
-        $this->checkErros();
+        $this->checkErrors();
 
         // set UTF-8
         $this->setUTF($sql);
@@ -51,7 +49,7 @@ class Backup
         return ($isSaved === true);
     }
 
-    private function loopThroughAllTables($tables, $link)
+    private function loopThroughAllTables($tables, $link): string
     {
         $content = '';
         //cycle through
@@ -70,7 +68,7 @@ class Backup
                 //Over rows
                 while ($row = mysqli_fetch_row($result)) {
 
-                    if ($counter == 1) {
+                    if ($counter === 1) {
                         $content .= 'INSERT INTO ' . $table . ' VALUES(';
                     } else {
                         $content .= '(';
@@ -104,12 +102,12 @@ class Backup
         return $content;
     }
 
-    private function setUTF($sql)
+    private function setUTF($sql): void
     {
-        return mysqli_query($sql, "SET NAMES 'utf8'");
+        mysqli_query($sql, "SET NAMES 'utf8'");
     }
 
-    private function checkErros()
+    private function checkErrors(): void
     {
         if (mysqli_connect_errno()) {
             echo "Connection Failed: " . mysqli_connect_error();
@@ -117,16 +115,13 @@ class Backup
         }
     }
 
-    private function getAllTables($link)
+    private function getAllTables($link): array
     {
-        if ($this->tables == '*') {
-            $tables = [];
-            $result = mysqli_query($link, 'SHOW TABLES');
-            while ($row = mysqli_fetch_row($result)) {
-                $tables[] = $row[0];
-            }
-        } else {
-            $tables = is_array($tables) ? $tables : explode(',', $tables);
+        $tables = [];
+        $result = mysqli_query($link, 'SHOW TABLES');
+
+        while ($row = mysqli_fetch_row($result)) {
+            $tables[] = $row[0];
         }
 
         return $tables;
