@@ -12,6 +12,12 @@ class Backup
     protected string $password;
     protected string $dbName;
 
+    /**
+     * @param string $host
+     * @param string $username
+     * @param string $password
+     * @param string $dbName
+     */
     public function __construct(string $host, string $username, string $password, string $dbName)
     {
         $this->host = $host;
